@@ -21,16 +21,6 @@ Architecture
 * A Postgres database backed by a Docker volume
 * A Node.js webapp which shows the results of the voting in real time
 
-
-Getting started
----------------
-####*Perquisites:*
-1. Fork this repository.
-2. Add this repository to your Codefresh account.
-3. Set your Docker registry (Docker Hub, GCR etc.) in your account admin. This is in case you want to push.
-
-(If you don't want to set the credentials in the admin or want to use a different credentials see example `push.with.credentials.yml` in the `vote` folder.)
-
 ####*Add repository using composition wizard:*
 
 1. Go to The Compositions tab
