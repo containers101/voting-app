@@ -23,6 +23,10 @@ Architecture
 
 ####*Add repository using composition wizard:*
 
+<p align="center">
+  <img src="./images/docker-compose.gif">
+</p>
+
 1. Go to The Compositions tab
 ![Service settings](images/codefresh_composition_first_screen.png)
 
