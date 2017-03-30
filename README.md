@@ -22,39 +22,34 @@ Architecture
 * A Node.js webapp which shows the results of the voting in real time
 
 
-
 Getting started
 ---------------
 ####*Perquisites:*
-1. Fork this repository. 
+1. Fork this repository.
 2. Add this repository to your Codefresh account.
 3. Set your Docker registry (Docker Hub, GCR etc.) in your account admin. This is in case you want to push.
 
 (If you don't want to set the credentials in the admin or want to use a different credentials see example `push.with.credentials.yml` in the `vote` folder.)
 
-####*Build and Push each service separately:*
+####*Add repository using composition wizard:*
 
-1. Go to The Service settings 
-![Service settings](images/settings.png)
-2. Create 3 services: *vote*, *result* and *worker*. 
-3. Set each service's `Use YML build` property to `ON`. Optional: set `Add webhooks` to on. This will trigger build on every commit.
-4. Set the YML location to `./vote/codefresh.build.and.push.yml` for the `vote` service. Do the same for each one of the other services, and just change the `vote` to `result` or `worker`.
-![Pipelines settings](images/pipelines.png)
-5. You can now press Build for each one of the pipelines that you want. Just select which one on the dropdown.
-![Pipelines settings](images/buildbutton.png)
-![Pipelines settings](images/builddialog.png)
- 
- 
-####*Build and Push all the services:*
-If you want to create on build for all the services you can just add one service with a yaml that will build all of them.
-
-1. Go to The Service settings 
-![Service settings](images/settings.png)
-2. Create only one service 
-3. Set service's `Use YML build` property to `ON`. 
-4. Set the YML location to `./codefresh.yml`.
-5. You can now press Build and build your service.
-![Service settings](images/buildfull.png)
-
-
-
+1. Go to The Compositions tab
+![Service settings](images/codefresh_composition_first_screen.png)
+2. Click on the button ADD COMPOSITION.
+![Service settings](images/codefresh_name_composition.png)
+3. Enter the name of composition and click NEXT
+![Service settings](images/codefresh_compose_from_file.png)
+4. Add your docker-compose.yml from file and click NEXT
+![Service settings](images/codefresh_select_repo.png)
+5. Specify the link to the repository, choose the branch 'start_from_compose' and click NEXT
+![Pipelines settings](images/codefresh_docker_compose.png)
+6. Specify the path to docker-compose.yml and click NEXT
+![Pipelines settings](images/codefresh_review_docker_compose.png)
+7. Review your docker-compose.yml and click CONTINUE
+![Pipelines settings](images/codefresh_compose_file.png)
+8. See the composition that will be created based on your file. It will parser your file and create a pipeline
+in case we detected warnings you can fix them later in the compositoin view
+![Pipelines settings](images/codefresh_build_images.png)
+9. Then you can choose BUILD IMAGES or go to COMPOSITION CONFIGURATION
+10. In composition view you will see it and will be able to fix the warnings/errors
+![Pipelines settings](images/codefresh_compose_editor.png)
