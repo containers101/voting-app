@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+    
+    tools {
+        maven 'maven'
+    }
+    stages{
+        stage('build'){
+            when{
+                 branch 'master'
+                 changeset "**/worker"
+            }
+            steps{
+                echo "compiling worker app"
+                dir('worker'){
+                    sh 'mvn compile'
+                }
+                }
+            }
+        
+         stage('test'){
+            when{
+                 branch 'master'
+                 changeset "**/worker"
+            }
+            steps{
+               echo "running unit tests" 
+               dir('worker'){
+                    sh 'mvn clean test'
+                }
+            }
+        }
+         stage('package'){
+            when{
+                 branch 'master'
+                 changeset "**/worker"
+             }
+            steps{
+                echo "packaging worker app"
+                 dir('worker'){
+                    sh 'mvn package -dskipTests'
+                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint:True
+                }
+            }
+        }
+    }
+
+
+      post{    
+          always{        
+              echo 'Building multibranch pipeline for worker is completed..'    
+              }    
+              failiure{      
+                  slackSend (channel: "instavote-cd", message: "Build Failed - 
+                  ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")    
+                  }  
+                    success{      
+                        slackSend (channel: "instavote-cd", message: "Build Succeeded - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+                      }
+                        }
+                        }
+                       
