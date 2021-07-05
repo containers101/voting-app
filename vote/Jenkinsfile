@@ -1,0 +1,44 @@
+pipeline {
+    agent {
+        docker{
+            image 'python:2.7.16-slim'
+            args '-u root'
+        }
+    }
+
+    
+    stages{
+        stage('build'){
+            when{
+               
+                 changeset "**/vote/**"
+            }
+            steps{
+                echo "compiling worker app"
+                dir('vote'){
+                    sh 'pip install -r requirements.txt'
+                   
+                }
+                }
+            }
+        
+         stage('test'){
+            when{
+
+                 changeset "**/vote/**"
+            }
+            steps{
+               echo "running unit tests" 
+               dir('vote'){
+                    sh 'pip install nose'
+                    sh 'nosetests -v'
+
+                }
+            }
+        }
+                
+    }
+}
+        
+
+// #comment

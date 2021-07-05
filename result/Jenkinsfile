@@ -1,0 +1,44 @@
+pipeline {
+    agent {
+        docker{
+            image 'node:8.16.-0-alpine'
+            args '-u root'
+        }
+    }
+    
+    tools {
+        nodejs 'node'
+    }
+    stages{
+        stage('build'){
+            when{
+               
+                 changeset "**/result/**"
+            }
+            steps{
+                echo "compiling worker app"
+                dir('result'){
+                    sh 'npm install'
+                   
+                }
+                }
+            }
+        
+         stage('test'){
+            when{
+
+                 changeset "**/result/**"
+            }
+            steps{
+               echo "running unit tests" 
+               dir('result'){
+                    sh 'npm install'
+                    sh 'npm test'
+
+                }
+            }
+        }
+                
+    }
+}
+        
